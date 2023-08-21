@@ -1,0 +1,57 @@
+%{
+int op = 0,i ,a, b;
+%}
+
+digi [0-9]+ 
+add "+"
+sub "-"
+mul "*"
+div "/"
+
+%%
+
+{digi} {op=0;}
+{add} {op=1;}
+{sub} {op=2;}
+{mul} {op=3;}
+{div} {op=4;}
+
+%%
+int digi()
+{
+if(op==0)
+a=atof(yytext);
+else
+{
+b=atof(yytext);
+switch(op)
+{
+case 1:a=a+b;
+{printf("\n The addition of given numbers is :%d\n",a);}
+	break;
+
+case 2:a=a-b;
+{printf("\n The subtraction of given numbers is :%d\n",a);}
+break;
+
+case 3:a=a*b;
+{printf("\n The multiplication of givin numbers is :%d\n",a);}
+break;
+
+case 4:a=a/b;
+{printf("\n The division of given numbers is :%d\n",a);}
+break;
+}
+op=0;
+}
+}
+
+int main()
+{ printf("enter numbers :");
+yylex();
+}
+
+int yywrap()
+{  
+return 1;
+}

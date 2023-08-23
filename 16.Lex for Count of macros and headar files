@@ -1,0 +1,20 @@
+%{
+int macro=0, header=0;
+%}
+%%
+^#define { macro++; }
+^#include { header++; }
+.|\n { }
+%%
+
+int yywrap(void) {
+return 1;
+}
+
+int main()
+{
+yyin = fopen("simple.txt", "r");
+yylex();
+printf("Number of macros defined = %d\n Number of header files included = %d\n", macro,header);
+fclose(yyin);
+}
